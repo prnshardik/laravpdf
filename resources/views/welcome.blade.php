@@ -25,7 +25,7 @@
         </script>
 
         <script>    
-            var url = "{{ url('titan.pdf') }}";
+            var url = "{{ url('ititan.pdf') }}";
 
             PDFJS.getDocument(url)
             .then(function(pdf) {
