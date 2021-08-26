@@ -25,7 +25,7 @@
             let yourstring = '';
 
             $(document).ready(function(){    
-                var url = "{{ asset('titan.pdf') }}";
+                var url = "{{ url('titan.pdf') }}";
 
                 PDFJS.getDocument(url)
                 .then(function(pdf) {
