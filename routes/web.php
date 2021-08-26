@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $pdf = url('titan.pdf');
+    return view('welcome', ['pdf' => $pdf]);
 });
 
 route::post('/save_data' ,'MyController@index')->name('save_data');
