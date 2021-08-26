@@ -23,9 +23,9 @@
         <script> 
             let yourstring = '';
         </script>
-        <script>
-            
-            var url = "{{ asset('titan.pdf') }}";
+
+        <script>    
+            var url = "{{ url('titan.pdf') }}";
 
             PDFJS.getDocument(url)
             .then(function(pdf) {
