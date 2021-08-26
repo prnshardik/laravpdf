@@ -20,7 +20,11 @@
         <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
+        <script> 
+            let yourstring = '';
+        </script>
         <script>
+            
             var url = "{{ asset('titan.pdf') }}";
 
             PDFJS.getDocument(url)
@@ -29,7 +33,7 @@
                 var container = document.getElementById("container");
 
                 // Loop from 1 to total_number_of_pages in PDF document
-                for (var i = 1; i <= 5; i++) {
+                for (var i = 1; i <= pdf.numPages; i++) {
 
                     // Get desired page
                     pdf.getPage(i).then(function(page) {
@@ -96,12 +100,12 @@
         </script>
 
         <script>
+            
             window.addEventListener('mouseup', function mousedown(e) {
-                let string = window.getSelection().toString();
+                yourstring = window.getSelection().toString();
                 let pageX = e.pageX;
                 let pageY = e.pageY;
-
-                if(string.length > 0){
+                if(yourstring.length > 0){
                     var button = document.getElementById('button');
                     button.style.display = "block";
                     button.style.position = "absolute";
@@ -111,12 +115,34 @@
                     var button = document.getElementById('button');
                     button.style.display = "none";
                 }
+                
             });
 
             $(document).ready(function() {
                 $("#button").click(function(e){
                     e.preventDefault();
-
+                    console.log(yourstring);
+                    if(yourstring.length > 0){
+                    $.ajax({
+                        url : "{{ route('save_data') }}",
+                        type : 'POST',
+                        data :{ "_token": "{{ csrf_token() }}","id": '1',"text" : yourstring},
+                        dataType: 'json',
+                        async:false,
+                        success : function(json){
+                            alert('sucess');
+                        },
+                        error: function(json){
+                            if(json.status === 422) {
+                                e.preventDefault();
+                                var errors_ = json.responseJSON;
+                                $.each(errors_.errors, function (key, value) {
+                                    alert(key);
+                                });
+                            }
+                        }
+                    });
+                    }
                     // here have to load ajax and save data in data base 
                     // based on response show alert and hide button
 

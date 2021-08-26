@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+route::post('/save_data' ,'MyController@index')->name('save_data');
+route::get('/get_data' ,'MyController@get_data')->name('get_data');
